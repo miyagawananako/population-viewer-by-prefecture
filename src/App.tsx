@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const App: React.FC = () => {
   return (
@@ -8,11 +8,7 @@ const App: React.FC = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <AppLink
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <AppLink href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           Learn React
         </AppLink>
       </AppHeader>
