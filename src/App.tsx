@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import PrefectureListComponent from './components/PrefectureList';
+import PopulationDataContainer from './components/PopulationDataContainer';
 
 interface Prefecture {
   prefCode: number;
@@ -9,6 +11,27 @@ interface Prefecture {
 interface PrefectureResponse {
   message: string | null;
   result: Prefecture[];
+}
+
+interface PopulationData {
+  year: number;
+  value: number;
+}
+
+interface PopulationComposition {
+  prefCode: number;
+  data: PopulationData[];
+}
+
+interface PopulationResponse {
+  message: string | null;
+  result: {
+    boundaryYear: number;
+    data: {
+      label: string;
+      data: PopulationData[];
+    }[];
+  };
 }
 
 const BASE_URL = 'https://yumemi-frontend-engineer-codecheck-api.vercel.app';
@@ -33,6 +56,29 @@ const fetchPrefectures = async (): Promise<PrefectureResponse> => {
   return response.json();
 };
 
+const fetchPopulationComposition = async (prefCode: number): Promise<PopulationResponse> => {
+  const apiKey = process.env.REACT_APP_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('APIキーが設定されていません');
+  }
+
+  const response = await fetch(
+    `${BASE_URL}/api/v1/population/composition/perYear?prefCode=${prefCode}`,
+    {
+      headers: {
+        'X-API-KEY': apiKey,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('人口構成データの取得に失敗しました');
+  }
+
+  return response.json();
+};
+
 const App: React.FC = () => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -40,6 +86,7 @@ const App: React.FC = () => {
     const savedPrefs = localStorage.getItem('selectedPrefs');
     return savedPrefs ? JSON.parse(savedPrefs) : [];
   });
+  const [populationData, setPopulationData] = useState<PopulationComposition[]>([]);
 
   useEffect(() => {
     const loadPrefectures = async () => {
@@ -56,6 +103,29 @@ const App: React.FC = () => {
 
   useEffect(() => {
     localStorage.setItem('selectedPrefs', JSON.stringify(selectedPrefs));
+
+    const fetchPopulationData = async () => {
+      try {
+        const newPopulationData = await Promise.all(
+          selectedPrefs.map(async (prefCode) => {
+            const response = await fetchPopulationComposition(prefCode);
+            return {
+              prefCode,
+              data: response.result.data[0].data,
+            };
+          })
+        );
+        setPopulationData(newPopulationData);
+      } catch (err) {
+        setError('人口構成データの取得に失敗しました');
+      }
+    };
+
+    if (selectedPrefs.length > 0) {
+      fetchPopulationData();
+    } else {
+      setPopulationData([]);
+    }
   }, [selectedPrefs]);
 
   const handleCheckboxChange = (prefCode: number) => {
@@ -70,22 +140,14 @@ const App: React.FC = () => {
 
   return (
     <AppContainer>
-      <AppHeader>
-        <Title>都道府県一覧</Title>
-        <PrefectureList>
-          {prefectures.map((pref) => (
-            <PrefectureItem key={pref.prefCode}>
-              <Checkbox
-                type="checkbox"
-                id={`pref-${pref.prefCode}`}
-                checked={selectedPrefs.includes(pref.prefCode)}
-                onChange={() => handleCheckboxChange(pref.prefCode)}
-              />
-              <Label htmlFor={`pref-${pref.prefCode}`}>{pref.prefName}</Label>
-            </PrefectureItem>
-          ))}
-        </PrefectureList>
-      </AppHeader>
+      <PrefectureListComponent
+        prefectures={prefectures}
+        selectedPrefs={selectedPrefs}
+        onCheckboxChange={handleCheckboxChange}
+      />
+      {populationData.length > 0 && (
+        <PopulationDataContainer populationData={populationData} prefectures={prefectures} />
+      )}
     </AppContainer>
   );
 };
@@ -94,59 +156,11 @@ export default App;
 
 const AppContainer = styled.div`
   text-align: center;
-`;
-
-const AppHeader = styled.header`
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-`;
-
-const Title = styled.h1`
-  margin-bottom: 2rem;
-  font-size: 1.5rem;
-`;
-
-const PrefectureList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
-  width: 90%;
-  max-width: 1200px;
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(5, 1fr);
-  }
-  @media (max-width: 900px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  @media (max-width: 700px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (max-width: 500px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`;
-
-const PrefectureItem = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Checkbox = styled.input`
-  margin-right: 0.5rem;
-  width: 1rem;
-  height: 1rem;
-  cursor: pointer;
-`;
-
-const Label = styled.label`
-  cursor: pointer;
-  flex: 1;
-  text-align: left;
-  font-size: 1rem;
+  padding: 24px;
 `;
 
 const ErrorMessage = styled.div`
