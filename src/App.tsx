@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PrefectureListComponent from './components/PrefectureList';
 import PopulationDataContainer from './components/PopulationDataContainer';
 
-interface Prefecture {
+export interface Prefecture {
   prefCode: number;
   prefName: string;
 }
@@ -18,9 +18,13 @@ interface PopulationData {
   value: number;
 }
 
-interface PopulationComposition {
+export type PopulationType = '総人口' | '年少人口' | '生産年齢人口' | '老年人口';
+
+export interface PopulationComposition {
   prefCode: number;
-  data: PopulationData[];
+  data: {
+    [key in PopulationType]: PopulationData[];
+  };
 }
 
 interface PopulationResponse {
@@ -109,9 +113,23 @@ const App: React.FC = () => {
         const newPopulationData = await Promise.all(
           selectedPrefs.map(async (prefCode) => {
             const response = await fetchPopulationComposition(prefCode);
+            const populationTypes: PopulationType[] = [
+              '総人口',
+              '年少人口',
+              '生産年齢人口',
+              '老年人口',
+            ];
+            const data: PopulationComposition['data'] = {} as PopulationComposition['data'];
+
+            response.result.data.forEach((item, index) => {
+              if (index < populationTypes.length) {
+                data[populationTypes[index]] = item.data;
+              }
+            });
+
             return {
               prefCode,
-              data: response.result.data[0].data,
+              data,
             };
           })
         );

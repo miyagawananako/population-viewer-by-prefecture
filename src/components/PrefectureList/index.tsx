@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-interface Prefecture {
-  prefCode: number;
-  prefName: string;
-}
+import { Prefecture } from '../../App';
 
 interface PrefectureListProps {
   prefectures: Prefecture[];
