@@ -10,6 +10,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { POPULATION_TYPES, STYLES } from '../../const';
 import { PopulationType, Prefecture, PopulationComposition } from '../../App';
 
 interface PopulationDataContainerProps {
@@ -51,7 +52,7 @@ const PopulationDataContainer: React.FC<PopulationDataContainerProps> = ({
         <h2>人口構成データ</h2>
       </Header>
       <PopulationTypeSelector>
-        {(['総人口', '年少人口', '生産年齢人口', '老年人口'] as PopulationType[]).map((type) => (
+        {POPULATION_TYPES.map((type) => (
           <PopulationTypeButton
             key={type}
             selected={selectedPopulationType === type}
@@ -121,10 +122,10 @@ export default PopulationDataContainer;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 24px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
+  gap: ${STYLES.spacing.medium};
+  padding: ${STYLES.spacing.large};
+  background-color: ${STYLES.colors.background};
+  border-radius: ${STYLES.borderRadius.medium};
   width: 90%;
   max-width: 1200px;
 `;
@@ -132,10 +133,9 @@ const Container = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 8px;
 
   h2 {
-    font-size: 24px;
+    font-size: ${STYLES.fontSize.large};
     margin: 0;
   }
 `;
@@ -143,21 +143,23 @@ const Header = styled.div`
 const PopulationTypeSelector = styled.div`
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: ${STYLES.spacing.small};
+  margin-bottom: ${STYLES.spacing.medium};
 `;
 
 const PopulationTypeButton = styled.button<{ selected: boolean }>`
-  padding: 8px 16px;
+  padding: ${STYLES.spacing.small} ${STYLES.spacing.medium};
   border: none;
-  border-radius: 4px;
-  background-color: ${({ selected }) => (selected ? '#4CAF50' : '#e0e0e0')};
-  color: ${({ selected }) => (selected ? 'white' : '#333')};
+  border-radius: ${STYLES.borderRadius.small};
+  background-color: ${({ selected }) =>
+    selected ? STYLES.colors.primary : STYLES.colors.buttonInactive};
+  color: ${({ selected }) => (selected ? 'white' : STYLES.colors.text)};
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background-color: ${({ selected }) => (selected ? '#45a049' : '#d0d0d0')};
+    background-color: ${({ selected }) =>
+      selected ? STYLES.colors.primaryHover : STYLES.colors.buttonInactiveHover};
   }
 `;
 
@@ -168,25 +170,25 @@ const ChartContainer = styled.div`
 const DataTable = styled.table`
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: ${STYLES.fontSize.medium};
 
   th,
   td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    border: 1px solid ${STYLES.colors.border};
+    padding: ${STYLES.spacing.small};
     text-align: right;
   }
 
   th {
-    background-color: #f5f5f5;
+    background-color: ${STYLES.colors.background};
     text-align: center;
   }
 
   tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: ${STYLES.colors.background};
   }
 
   tr:hover {
-    background-color: #f0f0f0;
+    background-color: ${STYLES.colors.hover};
   }
 `;

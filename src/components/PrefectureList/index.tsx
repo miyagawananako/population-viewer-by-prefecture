@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Prefecture } from '../../App';
+import { STYLES } from '../../const';
 
 interface PrefectureListProps {
   prefectures: Prefecture[];
@@ -37,41 +38,46 @@ export default PrefectureList;
 
 const Wrapper = styled.div`
   display: flex;
-  row-gap: 16px;
+  row-gap: ${STYLES.spacing.small};
   flex-direction: column;
-  padding: 24px;
+  padding: ${STYLES.spacing.large};
   align-items: center;
+  width: 100%;
 `;
 
 const Title = styled.h2`
-  font-size: 24px;
+  font-size: ${STYLES.fontSize.large};
   text-align: center;
+  margin: 0;
 `;
 
 const List = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 16px;
-  max-width: 1200px;
-  padding: 16px;
-  @media (max-width: 1200px) {
+  grid-template-columns: repeat(10, 1fr);
+  gap: ${STYLES.spacing.medium};
+  max-width: 1600px;
+  padding: ${STYLES.spacing.medium};
+  @media (max-width: 1600px) {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  @media (max-width: ${STYLES.breakpoints.xl}) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  @media (max-width: ${STYLES.breakpoints.lg}) {
     grid-template-columns: repeat(5, 1fr);
   }
-  @media (max-width: 900px) {
+  @media (max-width: ${STYLES.breakpoints.md}) {
     grid-template-columns: repeat(4, 1fr);
   }
-  @media (max-width: 700px) {
+  @media (max-width: ${STYLES.breakpoints.sm}) {
     grid-template-columns: repeat(3, 1fr);
-  }
-  @media (max-width: 500px) {
-    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
 const PrefectureItem = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: ${STYLES.spacing.small};
 `;
 
 const Checkbox = styled.input`
@@ -84,5 +90,5 @@ const Label = styled.label`
   cursor: pointer;
   flex: 1;
   text-align: left;
-  font-size: 16px;
+  font-size: ${STYLES.fontSize.medium};
 `;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PrefectureListComponent from './components/PrefectureList';
 import PopulationDataContainer from './components/PopulationDataContainer';
+import { BASE_URL, STORAGE_KEYS, STYLES } from './const';
 
 export interface Prefecture {
   prefCode: number;
@@ -37,8 +38,6 @@ interface PopulationResponse {
     }[];
   };
 }
-
-const BASE_URL = 'https://yumemi-frontend-engineer-codecheck-api.vercel.app';
 
 const fetchPrefectures = async (): Promise<PrefectureResponse> => {
   const apiKey = process.env.REACT_APP_API_KEY;
@@ -87,7 +86,7 @@ const App: React.FC = () => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedPrefs, setSelectedPrefs] = useState<number[]>(() => {
-    const savedPrefs = localStorage.getItem('selectedPrefs');
+    const savedPrefs = localStorage.getItem(STORAGE_KEYS.SELECTED_PREFS);
     return savedPrefs ? JSON.parse(savedPrefs) : [];
   });
   const [populationData, setPopulationData] = useState<PopulationComposition[]>([]);
@@ -106,7 +105,7 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('selectedPrefs', JSON.stringify(selectedPrefs));
+    localStorage.setItem(STORAGE_KEYS.SELECTED_PREFS, JSON.stringify(selectedPrefs));
 
     const fetchPopulationData = async () => {
       try {
@@ -182,6 +181,6 @@ const AppContainer = styled.div`
 `;
 
 const ErrorMessage = styled.div`
-  color: #ff6b6b;
-  font-size: 1rem;
+  color: ${STYLES.colors.error};
+  font-size: ${STYLES.fontSize.medium};
 `;
