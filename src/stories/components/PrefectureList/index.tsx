@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Prefecture } from '../../App';
-import { STYLES } from '../../const';
+import { Prefecture } from '../../../App';
+import { STYLES } from '../../../const';
 import { Title } from '../common/title';
 
 interface PrefectureListProps {
@@ -10,7 +10,7 @@ interface PrefectureListProps {
   onCheckboxChange: (prefCode: number) => void;
 }
 
-const PrefectureList: React.FC<PrefectureListProps> = ({
+export const PrefectureList: React.FC<PrefectureListProps> = ({
   prefectures,
   selectedPrefs,
   onCheckboxChange,

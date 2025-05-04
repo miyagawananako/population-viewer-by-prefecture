@@ -10,16 +10,16 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { POPULATION_TYPES, STYLES } from '../../const';
+import { POPULATION_TYPES, STYLES } from '../../../const';
 import { Title } from '../common/title';
-import { PopulationType, Prefecture, PopulationComposition } from '../../App';
+import { PopulationType, Prefecture, PopulationComposition } from '../../../App';
 
 interface PopulationDataContainerProps {
   populationData: PopulationComposition[];
   prefectures: Prefecture[];
 }
 
-const PopulationDataContainer: React.FC<PopulationDataContainerProps> = ({
+export const PopulationDataContainer: React.FC<PopulationDataContainerProps> = ({
   populationData,
   prefectures,
 }) => {

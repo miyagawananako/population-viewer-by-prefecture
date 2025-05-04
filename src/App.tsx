@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import PrefectureListComponent from './components/PrefectureList';
-import PopulationDataContainer from './components/PopulationDataContainer';
+import PrefectureListComponent from './stories/components/PrefectureList';
+import PopulationDataContainer from './stories/components/PopulationDataContainer';
 import { BASE_URL, STORAGE_KEYS, STYLES } from './const';
 
 export interface Prefecture {

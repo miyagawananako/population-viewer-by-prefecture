@@ -25,13 +25,16 @@
     "build": "DISABLE_NEW_JSX_TRANSFORM=true react-scripts build",
     "test": "DISABLE_NEW_JSX_TRANSFORM=true react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest",
-      "plugin:prettier/recommended"
+      "plugin:prettier/recommended",
+      "plugin:storybook/recommended"
     ]
   },
   "browserslist": {
@@ -47,8 +50,20 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/addon-interactions": "^8.6.12",
+    "@storybook/addon-onboarding": "^8.6.12",
+    "@storybook/blocks": "^8.6.12",
+    "@storybook/preset-create-react-app": "^8.6.12",
+    "@storybook/react": "^8.6.12",
+    "@storybook/react-webpack5": "^8.6.12",
+    "@storybook/test": "^8.6.12",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
-    "prettier": "^3.5.3"
+    "eslint-plugin-storybook": "^0.12.0",
+    "prettier": "^3.5.3",
+    "prop-types": "^15.8.1",
+    "storybook": "^8.6.12",
+    "webpack": "^5.99.7"
   }
 }
