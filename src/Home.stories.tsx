@@ -72,7 +72,7 @@ const populationBaseData = [
   },
 ];
 
-const Template: StoryFn<typeof Home> = () => {
+const Template: StoryFn<typeof Home> = (args) => {
   const [selectedPrefs, setSelectedPrefs] = useState<number[]>([]);
   const [populationData, setPopulationData] = useState<PopulationComposition[]>([]);
 
@@ -82,6 +82,7 @@ const Template: StoryFn<typeof Home> = () => {
 
   return (
     <Home
+      {...args}
       prefectures={[
         {
           prefCode: 1,
@@ -107,7 +108,6 @@ const Template: StoryFn<typeof Home> = () => {
           prev.includes(prefCode) ? prev.filter((code) => code !== prefCode) : [...prev, prefCode]
         );
       }}
-      error={null}
       isPrefecturesLoading={false}
       isPopulationLoading={false}
     />
@@ -115,5 +115,9 @@ const Template: StoryFn<typeof Home> = () => {
 };
 
 export const Default = Template.bind({});
-
 Default.args = {};
+
+export const Error = Template.bind({});
+Error.args = {
+  error: 'エラーが発生しました',
+};

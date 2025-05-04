@@ -84,4 +84,4 @@ Prettierを使用してコードをフォーマットします。
 このフォルダの内容を静的ファイルホスティングサービスにデプロイすることで、アプリケーションを公開できます。
 
 現在、アプリケーションは以下のURLで公開されています：
-[https://nanacomcodingtest.netlify.app/](https://nanacomcodingtest.netlify.app/)
+[https://population-viewer-by-prefecture.netlify.app/](https://population-viewer-by-prefecture.netlify.app/)
