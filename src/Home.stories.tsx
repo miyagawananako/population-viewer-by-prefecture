@@ -108,6 +108,8 @@ const Template: StoryFn<typeof Home> = () => {
         );
       }}
       error={null}
+      isPrefecturesLoading={false}
+      isPopulationLoading={false}
     />
   );
 };

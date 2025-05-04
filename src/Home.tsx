@@ -11,6 +11,8 @@ interface HomeProps {
   populationData: PopulationComposition[];
   onCheckboxChange: (prefCode: number) => void;
   error: string | null;
+  isPrefecturesLoading: boolean;
+  isPopulationLoading: boolean;
 }
 
 export const Home: React.FC<HomeProps> = ({
@@ -19,6 +21,8 @@ export const Home: React.FC<HomeProps> = ({
   populationData,
   onCheckboxChange,
   error,
+  isPrefecturesLoading,
+  isPopulationLoading,
 }) => {
   if (error) {
     return <ErrorMessage>{error}</ErrorMessage>;
@@ -30,9 +34,14 @@ export const Home: React.FC<HomeProps> = ({
         prefectures={prefectures}
         selectedPrefs={selectedPrefs}
         onCheckboxChange={onCheckboxChange}
+        isLoading={isPrefecturesLoading}
       />
       {populationData.length > 0 && (
-        <PopulationDataContainer populationData={populationData} prefectures={prefectures} />
+        <PopulationDataContainer
+          populationData={populationData}
+          prefectures={prefectures}
+          isLoading={isPopulationLoading}
+        />
       )}
     </Wrapper>
   );
@@ -50,4 +59,11 @@ const Wrapper = styled.div`
 const ErrorMessage = styled.div`
   color: ${theme.colors.error};
   font-size: ${theme.fontSize.medium};
+`;
+
+const LoadingMessage = styled.div`
+  color: ${theme.colors.primary};
+  font-size: ${theme.fontSize.large};
+  text-align: center;
+  padding: ${theme.size.large};
 `;

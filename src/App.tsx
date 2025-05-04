@@ -55,6 +55,8 @@ const fetchPopulationComposition = async (prefCode: number): Promise<PopulationR
 const App: React.FC = () => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isPrefecturesLoading, setIsPrefecturesLoading] = useState<boolean>(false);
+  const [isPopulationLoading, setIsPopulationLoading] = useState<boolean>(false);
   const [selectedPrefs, setSelectedPrefs] = useState<number[]>(() => {
     const savedPrefs = localStorage.getItem(STORAGE_KEYS.SELECTED_PREFS);
     return savedPrefs ? JSON.parse(savedPrefs) : [];
@@ -64,10 +66,13 @@ const App: React.FC = () => {
   useEffect(() => {
     const loadPrefectures = async () => {
       try {
+        setIsPrefecturesLoading(true);
         const response = await fetchPrefectures();
         setPrefectures(response.result);
       } catch (err) {
         setError('都道府県データの取得に失敗しました');
+      } finally {
+        setIsPrefecturesLoading(false);
       }
     };
 
@@ -79,6 +84,7 @@ const App: React.FC = () => {
 
     const fetchPopulationData = async () => {
       try {
+        setIsPopulationLoading(true);
         const newPopulationData = await Promise.all(
           selectedPrefs.map(async (prefCode) => {
             const response = await fetchPopulationComposition(prefCode);
@@ -110,6 +116,8 @@ const App: React.FC = () => {
         setPopulationData(newPopulationData);
       } catch (err) {
         setError('人口構成データの取得に失敗しました');
+      } finally {
+        setIsPopulationLoading(false);
       }
     };
 
@@ -133,6 +141,8 @@ const App: React.FC = () => {
       populationData={populationData}
       onCheckboxChange={handleCheckboxChange}
       error={error}
+      isPrefecturesLoading={isPrefecturesLoading}
+      isPopulationLoading={isPopulationLoading}
     />
   );
 };

@@ -7,10 +7,6 @@ const meta: Meta<typeof PopulationDataContainer> = {
 
 export default meta;
 
-const Template: StoryFn<typeof PopulationDataContainer> = (args) => {
-  return <PopulationDataContainer {...args} />;
-};
-
 const data = [
   { year: 1970, value: 1000000 },
   { year: 1980, value: 1010000 },
@@ -20,31 +16,42 @@ const data = [
   { year: 2020, value: 1050000 },
 ];
 
-export const Default = Template.bind({});
-Default.args = {
-  populationData: [
-    {
-      prefCode: 1,
-      data: {
-        総人口: data,
-        年少人口: data,
-        生産年齢人口: data,
-        老年人口: data,
+const Template: StoryFn<typeof PopulationDataContainer> = (args) => {
+  const defaultArgs = {
+    populationData: [
+      {
+        prefCode: 1,
+        data: {
+          総人口: data,
+          年少人口: data,
+          生産年齢人口: data,
+          老年人口: data,
+        },
       },
-    },
-  ],
-  prefectures: [
-    {
-      prefCode: 1,
-      prefName: '北海道',
-    },
-    {
-      prefCode: 2,
-      prefName: '青森県',
-    },
-    {
-      prefCode: 3,
-      prefName: '岩手県',
-    },
-  ],
+    ],
+    prefectures: [
+      {
+        prefCode: 1,
+        prefName: '北海道',
+      },
+      {
+        prefCode: 2,
+        prefName: '青森県',
+      },
+      {
+        prefCode: 3,
+        prefName: '岩手県',
+      },
+    ],
+  };
+
+  return <PopulationDataContainer {...args} {...defaultArgs} />;
+};
+
+export const Default = Template.bind({});
+Default.args = {};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
 };

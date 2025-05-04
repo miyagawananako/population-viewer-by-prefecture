@@ -3,34 +3,41 @@ import styled from 'styled-components';
 import { Prefecture } from '../../type';
 import { theme } from '../../theme';
 import { Title } from '../../atoms/title';
-
+import { Loading } from '../../atoms/loading';
 interface PrefectureListProps {
   prefectures: Prefecture[];
   selectedPrefs: number[];
   onCheckboxChange: (prefCode: number) => void;
+  isLoading: boolean;
 }
 
 export const PrefectureList: React.FC<PrefectureListProps> = ({
   prefectures,
   selectedPrefs,
   onCheckboxChange,
+  isLoading,
 }) => {
   return (
     <Wrapper>
       <Title>都道府県一覧</Title>
-      <List>
-        {prefectures.map((pref) => (
-          <PrefectureItem key={pref.prefCode}>
-            <Checkbox
-              type="checkbox"
-              id={`pref-${pref.prefCode}`}
-              checked={selectedPrefs.includes(pref.prefCode)}
-              onChange={() => onCheckboxChange(pref.prefCode)}
-            />
-            <Label htmlFor={`pref-${pref.prefCode}`}>{pref.prefName}</Label>
-          </PrefectureItem>
-        ))}
-      </List>
+
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <List>
+          {prefectures.map((pref) => (
+            <PrefectureItem key={pref.prefCode}>
+              <Checkbox
+                type="checkbox"
+                id={`pref-${pref.prefCode}`}
+                checked={selectedPrefs.includes(pref.prefCode)}
+                onChange={() => onCheckboxChange(pref.prefCode)}
+              />
+              <Label htmlFor={`pref-${pref.prefCode}`}>{pref.prefName}</Label>
+            </PrefectureItem>
+          ))}
+        </List>
+      )}
     </Wrapper>
   );
 };

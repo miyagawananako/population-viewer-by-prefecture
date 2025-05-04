@@ -14,15 +14,18 @@ import { POPULATION_TYPES } from '../../const';
 import { theme } from '../../theme';
 import { Title } from '../../atoms/title';
 import { PopulationType, Prefecture, PopulationComposition } from '../../type';
+import { Loading } from '../../atoms/loading';
 
 interface PopulationDataContainerProps {
   populationData: PopulationComposition[];
   prefectures: Prefecture[];
+  isLoading: boolean;
 }
 
 export const PopulationDataContainer: React.FC<PopulationDataContainerProps> = ({
   populationData,
   prefectures,
+  isLoading,
 }) => {
   const [selectedPopulationType, setSelectedPopulationType] = useState<PopulationType>('総人口');
 
@@ -68,6 +71,7 @@ export const PopulationDataContainer: React.FC<PopulationDataContainerProps> = (
           ))}
         </PopulationTypeSelect>
       </PopulationTypeSelector>
+      {isLoading && <Loading />}
       <ChartContainer>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={formatChartData()} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
