@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PrefectureList } from './organisms/PrefectureList';
-import { PopulationDataContainer } from './organisms/PopulationDataContainer';
+import { PopulationDataView } from './organisms/PopulationDataView';
 import { Prefecture, PopulationComposition } from './type';
 import { theme } from './theme';
 
@@ -37,7 +37,7 @@ export const Home: React.FC<HomeProps> = ({
         isLoading={isPrefecturesLoading}
       />
       {populationData.length > 0 && (
-        <PopulationDataContainer
+        <PopulationDataView
           populationData={populationData}
           prefectures={prefectures}
           isLoading={isPopulationLoading}
@@ -59,11 +59,4 @@ const Wrapper = styled.div`
 const ErrorMessage = styled.div`
   color: ${theme.colors.error};
   font-size: ${theme.fontSize.medium};
-`;
-
-const LoadingMessage = styled.div`
-  color: ${theme.colors.primary};
-  font-size: ${theme.fontSize.large};
-  text-align: center;
-  padding: ${theme.size.large};
 `;

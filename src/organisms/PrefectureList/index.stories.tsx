@@ -25,7 +25,6 @@ const Template: StoryFn<typeof PrefectureList> = (args) => {
 };
 
 export const Default = Template.bind({});
-
 Default.args = {
   prefectures: [
     {

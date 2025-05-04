@@ -9,7 +9,7 @@ const meta: Meta<typeof Home> = {
 
 export default meta;
 
-const data = [
+const populationData1 = [
   { year: 1970, value: 1000000 },
   { year: 1980, value: 1010000 },
   { year: 1990, value: 1020000 },
@@ -18,17 +18,17 @@ const data = [
   { year: 2020, value: 1050000 },
 ];
 
-const data2 = data.map((item) => ({
+const populationData2 = populationData1.map((item) => ({
   ...item,
   value: item.value + 100000,
 }));
 
-const data3 = data.map((item) => ({
+const populationData3 = populationData1.map((item) => ({
   ...item,
   value: item.value + 200000,
 }));
 
-const data4 = data.map((item) => ({
+const populationData4 = populationData1.map((item) => ({
   ...item,
   value: item.value + 300000,
 }));
@@ -37,37 +37,37 @@ const populationBaseData = [
   {
     prefCode: 1,
     data: {
-      総人口: data,
-      年少人口: data,
-      生産年齢人口: data,
-      老年人口: data,
+      総人口: populationData1,
+      年少人口: populationData1,
+      生産年齢人口: populationData1,
+      老年人口: populationData1,
     },
   },
   {
     prefCode: 2,
     data: {
-      総人口: data2,
-      年少人口: data2,
-      生産年齢人口: data2,
-      老年人口: data2,
+      総人口: populationData2,
+      年少人口: populationData2,
+      生産年齢人口: populationData2,
+      老年人口: populationData2,
     },
   },
   {
     prefCode: 3,
     data: {
-      総人口: data3,
-      年少人口: data3,
-      生産年齢人口: data3,
-      老年人口: data3,
+      総人口: populationData3,
+      年少人口: populationData3,
+      生産年齢人口: populationData3,
+      老年人口: populationData3,
     },
   },
   {
     prefCode: 4,
     data: {
-      総人口: data4,
-      年少人口: data4,
-      生産年齢人口: data4,
-      老年人口: data4,
+      総人口: populationData4,
+      年少人口: populationData4,
+      生産年齢人口: populationData4,
+      老年人口: populationData4,
     },
   },
 ];

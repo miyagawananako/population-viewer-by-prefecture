@@ -3,11 +3,6 @@ export type Prefecture = {
   prefName: string;
 };
 
-export type PrefectureResponse = {
-  message: string | null;
-  result: Prefecture[];
-};
-
 export type PopulationData = {
   year: number;
   value: number;
@@ -19,16 +14,5 @@ export type PopulationComposition = {
   prefCode: number;
   data: {
     [key in PopulationType]: PopulationData[];
-  };
-};
-
-export type PopulationResponse = {
-  message: string | null;
-  result: {
-    boundaryYear: number;
-    data: {
-      label: string;
-      data: PopulationData[];
-    }[];
   };
 };

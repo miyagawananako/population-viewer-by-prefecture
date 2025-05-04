@@ -1,56 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Home } from './Home';
-import { STORAGE_KEYS, BASE_URL } from './const';
-import {
-  Prefecture,
-  PrefectureResponse,
-  PopulationType,
-  PopulationComposition,
-  PopulationResponse,
-} from './type';
-
-const fetchPrefectures = async (): Promise<PrefectureResponse> => {
-  const apiKey = process.env.REACT_APP_API_KEY;
-
-  if (!apiKey) {
-    throw new Error('APIキーが設定されていません');
-  }
-
-  const response = await fetch(`${BASE_URL}/api/v1/prefectures`, {
-    headers: {
-      'X-API-KEY': apiKey,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('都道府県データの取得に失敗しました');
-  }
-
-  return response.json();
-};
-
-const fetchPopulationComposition = async (prefCode: number): Promise<PopulationResponse> => {
-  const apiKey = process.env.REACT_APP_API_KEY;
-
-  if (!apiKey) {
-    throw new Error('APIキーが設定されていません');
-  }
-
-  const response = await fetch(
-    `${BASE_URL}/api/v1/population/composition/perYear?prefCode=${prefCode}`,
-    {
-      headers: {
-        'X-API-KEY': apiKey,
-      },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error('人口構成データの取得に失敗しました');
-  }
-
-  return response.json();
-};
+import { STORAGE_KEYS } from './const';
+import { Prefecture, PopulationType, PopulationComposition } from './type';
+import { fetchPrefectures, fetchPopulationComposition } from './api/prefectureApi';
 
 const App: React.FC = () => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
@@ -83,6 +35,11 @@ const App: React.FC = () => {
     localStorage.setItem(STORAGE_KEYS.SELECTED_PREFS, JSON.stringify(selectedPrefs));
 
     const fetchPopulationData = async () => {
+      if (selectedPrefs.length === 0) {
+        setPopulationData([]);
+        return;
+      }
+
       try {
         setIsPopulationLoading(true);
         const newPopulationData = await Promise.all(
@@ -101,11 +58,13 @@ const App: React.FC = () => {
               老年人口: [],
             };
 
-            response.result.data.forEach((item, index) => {
-              if (index < populationTypes.length) {
-                data[populationTypes[index]] = item.data;
+            response.result.data.forEach(
+              (item: { label: string; data: { year: number; value: number }[] }, index: number) => {
+                if (index < populationTypes.length) {
+                  data[populationTypes[index]] = item.data;
+                }
               }
-            });
+            );
 
             return {
               prefCode,
@@ -121,11 +80,7 @@ const App: React.FC = () => {
       }
     };
 
-    if (selectedPrefs.length > 0) {
-      fetchPopulationData();
-    } else {
-      setPopulationData([]);
-    }
+    fetchPopulationData();
   }, [selectedPrefs]);
 
   const handleCheckboxChange = (prefCode: number) => {

@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { PopulationDataContainer } from '.';
+import { PopulationDataView } from '.';
 
-const meta: Meta<typeof PopulationDataContainer> = {
-  component: PopulationDataContainer,
+const meta: Meta<typeof PopulationDataView> = {
+  component: PopulationDataView,
 };
 
 export default meta;
@@ -70,10 +70,8 @@ const prefectures = [
   },
 ];
 
-const Template: StoryFn<typeof PopulationDataContainer> = (args) => {
-  return (
-    <PopulationDataContainer {...args} populationData={populationData} prefectures={prefectures} />
-  );
+const Template: StoryFn<typeof PopulationDataView> = (args) => {
+  return <PopulationDataView {...args} populationData={populationData} prefectures={prefectures} />;
 };
 
 export const Default = Template.bind({});

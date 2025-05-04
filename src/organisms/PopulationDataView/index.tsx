@@ -16,13 +16,18 @@ import { Title } from '../../atoms/title';
 import { PopulationType, Prefecture, PopulationComposition } from '../../type';
 import { Loading } from '../../atoms/loading';
 
-interface PopulationDataContainerProps {
+type PopulationDataViewProps = {
   populationData: PopulationComposition[];
   prefectures: Prefecture[];
   isLoading: boolean;
-}
+};
 
-export const PopulationDataContainer: React.FC<PopulationDataContainerProps> = ({
+type YearlyPopulationData = {
+  year: number;
+  [prefectureName: string]: number;
+};
+
+export const PopulationDataView: React.FC<PopulationDataViewProps> = ({
   populationData,
   prefectures,
   isLoading,
@@ -34,25 +39,25 @@ export const PopulationDataContainer: React.FC<PopulationDataContainerProps> = (
     return `hsl(${hue}, 70%, 50%)`;
   };
 
-  const formatChartData = () => {
+  const formatChartData = (): YearlyPopulationData[] => {
     if (populationData.length === 0) return [];
 
     const years = populationData[0].data[selectedPopulationType].map((item) => item.year);
     return years.map((year) => {
-      const dataPoint: any = { year };
+      const yearlyPopulationData: YearlyPopulationData = { year };
       populationData.forEach((data) => {
         const yearData = data.data[selectedPopulationType].find((item) => item.year === year);
         const prefName = prefectures.find((p) => p.prefCode === data.prefCode)?.prefName;
         if (prefName && yearData) {
-          dataPoint[prefName] = yearData.value;
+          yearlyPopulationData[prefName] = yearData.value;
         }
       });
-      return dataPoint;
+      return yearlyPopulationData;
     });
   };
 
   return (
-    <Container>
+    <Wrapper>
       <Title>人口構成データ</Title>
       <PopulationTypeSelector>
         <PopulationTypeSelect
@@ -72,7 +77,7 @@ export const PopulationDataContainer: React.FC<PopulationDataContainerProps> = (
         </PopulationTypeSelect>
       </PopulationTypeSelector>
       {isLoading && <Loading />}
-      <ChartContainer>
+      <ChartWrapper>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={formatChartData()} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -111,8 +116,8 @@ export const PopulationDataContainer: React.FC<PopulationDataContainerProps> = (
             })}
           </LineChart>
         </ResponsiveContainer>
-      </ChartContainer>
-      <TableContainer>
+      </ChartWrapper>
+      <TableWrapper>
         <FixedTable>
           <thead>
             <tr>
@@ -127,7 +132,7 @@ export const PopulationDataContainer: React.FC<PopulationDataContainerProps> = (
             ))}
           </tbody>
         </FixedTable>
-        <ScrollableTableContainer>
+        <ScrollableTableWrapper>
           <ScrollableTable>
             <thead>
               <tr>
@@ -151,15 +156,15 @@ export const PopulationDataContainer: React.FC<PopulationDataContainerProps> = (
               ))}
             </tbody>
           </ScrollableTable>
-        </ScrollableTableContainer>
-      </TableContainer>
-    </Container>
+        </ScrollableTableWrapper>
+      </TableWrapper>
+    </Wrapper>
   );
 };
 
-export default PopulationDataContainer;
+export default PopulationDataView;
 
-const Container = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${theme.size.medium};
@@ -203,11 +208,11 @@ const PopulationTypeSelect = styled.select`
   }
 `;
 
-const ChartContainer = styled.div`
+const ChartWrapper = styled.div`
   width: 100%;
 `;
 
-const TableContainer = styled.div`
+const TableWrapper = styled.div`
   width: 100%;
   margin-top: ${theme.size.medium};
   display: flex;
@@ -242,7 +247,7 @@ const FixedTable = styled(BaseTable)`
   border-right: 2px solid ${theme.colors.border};
 `;
 
-const ScrollableTableContainer = styled.div`
+const ScrollableTableWrapper = styled.div`
   overflow-x: auto;
 `;
 

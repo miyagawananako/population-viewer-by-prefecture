@@ -20,11 +20,10 @@ export const PrefectureList: React.FC<PrefectureListProps> = ({
   return (
     <Wrapper>
       <Title>都道府県一覧</Title>
-
       {isLoading ? (
         <Loading />
       ) : (
-        <List>
+        <CheckboxList>
           {prefectures.map((pref) => (
             <PrefectureItem key={pref.prefCode}>
               <Checkbox
@@ -36,7 +35,7 @@ export const PrefectureList: React.FC<PrefectureListProps> = ({
               <Label htmlFor={`pref-${pref.prefCode}`}>{pref.prefName}</Label>
             </PrefectureItem>
           ))}
-        </List>
+        </CheckboxList>
       )}
     </Wrapper>
   );
@@ -53,7 +52,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const List = styled.div`
+const CheckboxList = styled.div`
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   gap: ${theme.size.medium};
