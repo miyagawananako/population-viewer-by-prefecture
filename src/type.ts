@@ -1,7 +1,7 @@
-export interface Prefecture {
+export type Prefecture = {
   prefCode: number;
   prefName: string;
-}
+};
 
 export type PrefectureResponse = {
   message: string | null;
@@ -31,4 +31,4 @@ export type PopulationResponse = {
       data: PopulationData[];
     }[];
   };
-}
+};

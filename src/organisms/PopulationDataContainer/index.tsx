@@ -10,7 +10,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { POPULATION_TYPES, STYLES } from '../../const';
+import { POPULATION_TYPES } from '../../const';
+import { theme } from '../../theme';
 import { Title } from '../../atoms/title';
 import { PopulationType, Prefecture, PopulationComposition } from '../../type';
 
@@ -152,10 +153,10 @@ export default PopulationDataContainer;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${STYLES.size.medium};
-  padding: ${STYLES.size.large};
-  background-color: ${STYLES.colors.background};
-  border-radius: ${STYLES.borderRadius.medium};
+  gap: ${theme.size.medium};
+  padding: ${theme.size.large};
+  background-color: ${theme.colors.background};
+  border-radius: ${theme.borderRadius.medium};
   width: 90%;
   max-width: 1200px;
 `;
@@ -163,33 +164,33 @@ const Container = styled.div`
 const PopulationTypeSelector = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: ${STYLES.size.medium};
+  margin-bottom: ${theme.size.medium};
 `;
 
 const PopulationTypeSelect = styled.select`
-  padding: ${STYLES.size.small} ${STYLES.size.medium};
-  border: 1px solid ${STYLES.colors.border};
-  border-radius: ${STYLES.borderRadius.small};
-  background-color: ${STYLES.colors.background};
-  color: ${STYLES.colors.text};
-  font-size: ${STYLES.fontSize.medium};
+  padding: ${theme.size.small} ${theme.size.medium};
+  border: 1px solid ${theme.colors.border};
+  border-radius: ${theme.borderRadius.small};
+  background-color: ${theme.colors.background};
+  color: ${theme.colors.text};
+  font-size: ${theme.fontSize.medium};
   cursor: pointer;
   min-width: 200px;
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right ${STYLES.size.small} center;
-  background-size: ${STYLES.size.medium};
-  padding-right: ${STYLES.size.large};
+  background-position: right ${theme.size.small} center;
+  background-size: ${theme.size.medium};
+  padding-right: ${theme.size.large};
 
   &:focus {
     outline: none;
-    border-color: ${STYLES.colors.primary};
+    border-color: ${theme.colors.primary};
   }
 
   option {
-    background-color: ${STYLES.colors.background};
-    color: ${STYLES.colors.text};
+    background-color: ${theme.colors.background};
+    color: ${theme.colors.text};
   }
 `;
 
@@ -199,7 +200,7 @@ const ChartContainer = styled.div`
 
 const TableContainer = styled.div`
   width: 100%;
-  margin-top: ${STYLES.size.medium};
+  margin-top: ${theme.size.medium};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -207,29 +208,29 @@ const TableContainer = styled.div`
 
 const BaseTable = styled.table`
   border-collapse: collapse;
-  font-size: ${STYLES.fontSize.medium};
-  background-color: ${STYLES.colors.white};
+  font-size: ${theme.fontSize.medium};
+  background-color: ${theme.colors.white};
 
   th,
   td {
-    border: 1px solid ${STYLES.colors.border};
-    padding: ${STYLES.size.small};
+    border: 1px solid ${theme.colors.border};
+    padding: ${theme.size.small};
     text-align: center;
     white-space: nowrap;
   }
 
   th {
-    background-color: ${STYLES.colors.white};
-    border-bottom: 2px solid ${STYLES.colors.border};
+    background-color: ${theme.colors.white};
+    border-bottom: 2px solid ${theme.colors.border};
   }
 
   tr:nth-child(odd) {
-    background-color: ${STYLES.colors.tableRowOdd};
+    background-color: ${theme.colors.tableRowOdd};
   }
 `;
 
 const FixedTable = styled(BaseTable)`
-  border-right: 2px solid ${STYLES.colors.border};
+  border-right: 2px solid ${theme.colors.border};
 `;
 
 const ScrollableTableContainer = styled.div`

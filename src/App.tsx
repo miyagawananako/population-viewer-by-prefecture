@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Home } from './Home';
-import { BASE_URL, STORAGE_KEYS } from './const';
+import { STORAGE_KEYS, BASE_URL } from './const';
 import {
   Prefecture,
   PrefectureResponse,
@@ -8,41 +8,6 @@ import {
   PopulationComposition,
   PopulationResponse,
 } from './type';
-
-// export interface Prefecture {
-//   prefCode: number;
-//   prefName: string;
-// }
-
-// interface PrefectureResponse {
-//   message: string | null;
-//   result: Prefecture[];
-// }
-
-// interface PopulationData {
-//   year: number;
-//   value: number;
-// }
-
-// export type PopulationType = '総人口' | '年少人口' | '生産年齢人口' | '老年人口';
-
-// export interface PopulationComposition {
-//   prefCode: number;
-//   data: {
-//     [key in PopulationType]: PopulationData[];
-//   };
-// }
-
-// interface PopulationResponse {
-//   message: string | null;
-//   result: {
-//     boundaryYear: number;
-//     data: {
-//       label: string;
-//       data: PopulationData[];
-//     }[];
-//   };
-// }
 
 const fetchPrefectures = async (): Promise<PrefectureResponse> => {
   const apiKey = process.env.REACT_APP_API_KEY;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PrefectureList } from './organisms/PrefectureList';
 import { PopulationDataContainer } from './organisms/PopulationDataContainer';
 import { Prefecture, PopulationComposition } from './type';
-import { STYLES } from './const';
+import { theme } from './theme';
 
 interface HomeProps {
   prefectures: Prefecture[];
@@ -44,10 +44,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: ${STYLES.size.large};
+  padding: ${theme.size.large};
 `;
 
 const ErrorMessage = styled.div`
-  color: ${STYLES.colors.error};
-  font-size: ${STYLES.fontSize.medium};
+  color: ${theme.colors.error};
+  font-size: ${theme.fontSize.medium};
 `;

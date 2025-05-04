@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Prefecture } from '../../type';
-import { STYLES } from '../../const';
+import { theme } from '../../theme';
 import { Title } from '../../atoms/title';
 
 interface PrefectureListProps {
@@ -39,9 +39,9 @@ export default PrefectureList;
 
 const Wrapper = styled.div`
   display: flex;
-  row-gap: ${STYLES.size.small};
+  row-gap: ${theme.size.small};
   flex-direction: column;
-  padding: ${STYLES.size.large};
+  padding: ${theme.size.large};
   align-items: center;
   width: 100%;
 `;
@@ -49,22 +49,22 @@ const Wrapper = styled.div`
 const List = styled.div`
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  gap: ${STYLES.size.medium};
+  gap: ${theme.size.medium};
   max-width: 1600px;
-  padding: ${STYLES.size.medium};
+  padding: ${theme.size.medium};
   @media (max-width: 1600px) {
     grid-template-columns: repeat(8, 1fr);
   }
-  @media (max-width: ${STYLES.breakpoints.xl}) {
+  @media (max-width: ${theme.breakpoints.xl}) {
     grid-template-columns: repeat(6, 1fr);
   }
-  @media (max-width: ${STYLES.breakpoints.lg}) {
+  @media (max-width: ${theme.breakpoints.lg}) {
     grid-template-columns: repeat(5, 1fr);
   }
-  @media (max-width: ${STYLES.breakpoints.md}) {
+  @media (max-width: ${theme.breakpoints.md}) {
     grid-template-columns: repeat(4, 1fr);
   }
-  @media (max-width: ${STYLES.breakpoints.sm}) {
+  @media (max-width: ${theme.breakpoints.sm}) {
     grid-template-columns: repeat(3, 1fr);
   }
 `;
@@ -72,17 +72,17 @@ const List = styled.div`
 const PrefectureItem = styled.div`
   display: flex;
   align-items: center;
-  gap: ${STYLES.size.small};
+  gap: ${theme.size.small};
 `;
 
 const Checkbox = styled.input`
-  width: ${STYLES.size.medium};
-  height: ${STYLES.size.medium};
+  width: ${theme.size.medium};
+  height: ${theme.size.medium};
   cursor: pointer;
 `;
 
 const Label = styled.label`
   text-align: left;
-  font-size: ${STYLES.fontSize.medium};
+  font-size: ${theme.fontSize.medium};
   white-space: nowrap;
 `;
