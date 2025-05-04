@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
-import { BASE_URL } from './const';
+import { BASE_URL, POPULATION_TYPES } from './const';
 
 class ResizeObserverMock {
   observe() {}
@@ -18,36 +18,13 @@ const mockPrefectures = [
 const mockPopulationData = {
   result: {
     boundaryYear: 2020,
-    data: [
-      {
-        label: '総人口',
-        data: [
-          { year: 2020, value: 1000000 },
-          { year: 2021, value: 1010000 },
-        ],
-      },
-      {
-        label: '年少人口',
-        data: [
-          { year: 2020, value: 200000 },
-          { year: 2021, value: 201000 },
-        ],
-      },
-      {
-        label: '生産年齢人口',
-        data: [
-          { year: 2020, value: 600000 },
-          { year: 2021, value: 601000 },
-        ],
-      },
-      {
-        label: '老年人口',
-        data: [
-          { year: 2020, value: 200000 },
-          { year: 2021, value: 201000 },
-        ],
-      },
-    ],
+    data: POPULATION_TYPES.map((label) => ({
+      label,
+      data: [
+        { year: 2020, value: 1000000 },
+        { year: 2021, value: 1010000 },
+      ],
+    })),
   },
 };
 

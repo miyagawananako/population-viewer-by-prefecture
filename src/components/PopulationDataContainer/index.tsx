@@ -52,15 +52,16 @@ const PopulationDataContainer: React.FC<PopulationDataContainerProps> = ({
         <h2>人口構成データ</h2>
       </Header>
       <PopulationTypeSelector>
-        {POPULATION_TYPES.map((type) => (
-          <PopulationTypeButton
-            key={type}
-            selected={selectedPopulationType === type}
-            onClick={() => setSelectedPopulationType(type)}
-          >
-            {type}
-          </PopulationTypeButton>
-        ))}
+        <PopulationTypeSelect
+          value={selectedPopulationType}
+          onChange={(e) => setSelectedPopulationType(e.target.value as PopulationType)}
+        >
+          {POPULATION_TYPES.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </PopulationTypeSelect>
       </PopulationTypeSelector>
       <ChartContainer>
         <ResponsiveContainer width="100%" height={400}>
@@ -72,7 +73,19 @@ const PopulationDataContainer: React.FC<PopulationDataContainerProps> = ({
               interval="preserveStartEnd"
               tick={{ fontSize: 12 }}
             />
-            <YAxis tick={{ fontSize: 12 }} />
+            <YAxis
+              tick={{ fontSize: 12 }}
+              tickFormatter={(value: number) => {
+                if (value >= 100000000) {
+                  return `${(value / 100000000).toFixed(1)}億`;
+                }
+                if (value >= 10000) {
+                  return `${(value / 10000).toFixed(1)}万`;
+                }
+                return value.toString();
+              }}
+              width={30}
+            />
             <Tooltip contentStyle={{ fontSize: 12 }} />
             <Legend wrapperStyle={{ fontSize: 12 }} />
             {populationData.map((data) => {
@@ -90,29 +103,47 @@ const PopulationDataContainer: React.FC<PopulationDataContainerProps> = ({
           </LineChart>
         </ResponsiveContainer>
       </ChartContainer>
-      <DataTable>
-        <thead>
-          <tr>
-            <th>年</th>
-            {populationData.map((data) => (
-              <th key={data.prefCode}>
-                {prefectures.find((p) => p.prefCode === data.prefCode)?.prefName}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {formatChartData().map((row, index) => (
-            <tr key={index}>
-              <td>{row.year}年</td>
-              {populationData.map((data) => {
-                const prefName = prefectures.find((p) => p.prefCode === data.prefCode)?.prefName;
-                return <td key={data.prefCode}>{row[prefName!].toLocaleString()}人</td>;
-              })}
+      <TableContainer>
+        <FixedTable>
+          <thead>
+            <tr>
+              <th>年</th>
             </tr>
-          ))}
-        </tbody>
-      </DataTable>
+          </thead>
+          <tbody>
+            {formatChartData().map((row, index) => (
+              <tr key={index}>
+                <td>{row.year}年</td>
+              </tr>
+            ))}
+          </tbody>
+        </FixedTable>
+        <ScrollableTableContainer>
+          <ScrollableTable>
+            <thead>
+              <tr>
+                {populationData.map((data) => (
+                  <th key={data.prefCode}>
+                    {prefectures.find((p) => p.prefCode === data.prefCode)?.prefName}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {formatChartData().map((row, index) => (
+                <tr key={index}>
+                  {populationData.map((data) => {
+                    const prefName = prefectures.find(
+                      (p) => p.prefCode === data.prefCode
+                    )?.prefName;
+                    return <td key={data.prefCode}>{row[prefName!].toLocaleString()}人</td>;
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </ScrollableTable>
+        </ScrollableTableContainer>
+      </TableContainer>
     </Container>
   );
 };
@@ -143,23 +174,33 @@ const Header = styled.div`
 const PopulationTypeSelector = styled.div`
   display: flex;
   justify-content: center;
-  gap: ${STYLES.spacing.small};
   margin-bottom: ${STYLES.spacing.medium};
 `;
 
-const PopulationTypeButton = styled.button<{ selected: boolean }>`
+const PopulationTypeSelect = styled.select`
   padding: ${STYLES.spacing.small} ${STYLES.spacing.medium};
-  border: none;
+  border: 1px solid ${STYLES.colors.border};
   border-radius: ${STYLES.borderRadius.small};
-  background-color: ${({ selected }) =>
-    selected ? STYLES.colors.primary : STYLES.colors.buttonInactive};
-  color: ${({ selected }) => (selected ? 'white' : STYLES.colors.text)};
+  background-color: ${STYLES.colors.background};
+  color: ${STYLES.colors.text};
+  font-size: ${STYLES.fontSize.medium};
   cursor: pointer;
-  transition: all 0.2s;
+  min-width: 200px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right ${STYLES.spacing.small} center;
+  background-size: 16px;
+  padding-right: ${STYLES.spacing.large};
 
-  &:hover {
-    background-color: ${({ selected }) =>
-      selected ? STYLES.colors.primaryHover : STYLES.colors.buttonInactiveHover};
+  &:focus {
+    outline: none;
+    border-color: ${STYLES.colors.primary};
+  }
+
+  option {
+    background-color: ${STYLES.colors.background};
+    color: ${STYLES.colors.text};
   }
 `;
 
@@ -167,8 +208,14 @@ const ChartContainer = styled.div`
   width: 100%;
 `;
 
-const DataTable = styled.table`
+const TableContainer = styled.div`
   width: 100%;
+  margin-top: ${STYLES.spacing.medium};
+  display: flex;
+  background-color: ${STYLES.colors.white};
+`;
+
+const BaseTable = styled.table`
   border-collapse: collapse;
   font-size: ${STYLES.fontSize.medium};
 
@@ -176,19 +223,33 @@ const DataTable = styled.table`
   td {
     border: 1px solid ${STYLES.colors.border};
     padding: ${STYLES.spacing.small};
-    text-align: right;
-  }
-
-  th {
-    background-color: ${STYLES.colors.background};
     text-align: center;
   }
 
-  tr:nth-child(even) {
-    background-color: ${STYLES.colors.background};
+  th {
+    background-color: ${STYLES.colors.white};
+    border-bottom: 2px solid ${STYLES.colors.border};
   }
 
-  tr:hover {
-    background-color: ${STYLES.colors.hover};
+  tr:nth-child(odd) {
+    background-color: ${STYLES.colors.tableRowOdd};
+  }
+`;
+
+const FixedTable = styled(BaseTable)`
+  border-right: 2px solid ${STYLES.colors.border};
+`;
+
+const ScrollableTableContainer = styled.div`
+  flex: 1;
+  overflow-x: auto;
+`;
+
+const ScrollableTable = styled(BaseTable)`
+  min-width: 700px;
+  white-space: nowrap;
+
+  td {
+    text-align: right;
   }
 `;
