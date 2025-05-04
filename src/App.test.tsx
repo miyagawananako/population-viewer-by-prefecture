@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 import { BASE_URL, POPULATION_TYPES } from './const';
+import { mockPrefectures } from './mocks/prefectures';
 
 class ResizeObserverMock {
   observe() {}
@@ -9,11 +10,6 @@ class ResizeObserverMock {
   disconnect() {}
 }
 global.ResizeObserver = ResizeObserverMock;
-
-const mockPrefectures = [
-  { prefCode: 1, prefName: '北海道' },
-  { prefCode: 2, prefName: '青森県' },
-];
 
 const mockPopulationData = {
   result: {

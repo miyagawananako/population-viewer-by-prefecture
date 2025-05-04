@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { PrefectureList } from '.';
 import { useState } from 'react';
+import { mockPrefectures } from '../../mocks/prefectures';
 
 const meta: Meta<typeof PrefectureList> = {
   component: PrefectureList,
@@ -26,32 +27,7 @@ const Template: StoryFn<typeof PrefectureList> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  prefectures: [
-    {
-      prefCode: 1,
-      prefName: '北海道',
-    },
-    {
-      prefCode: 2,
-      prefName: '青森県',
-    },
-    {
-      prefCode: 3,
-      prefName: '岩手県',
-    },
-    {
-      prefCode: 4,
-      prefName: '宮城県',
-    },
-    {
-      prefCode: 5,
-      prefName: '秋田県',
-    },
-    {
-      prefCode: 6,
-      prefName: '山形県',
-    },
-  ],
+  prefectures: mockPrefectures,
 };
 
 export const Loading = Template.bind({});
