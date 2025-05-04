@@ -10,9 +10,9 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { POPULATION_TYPES, STYLES } from '../../../const';
-import { Title } from '../common/title';
-import { PopulationType, Prefecture, PopulationComposition } from '../../../App';
+import { POPULATION_TYPES, STYLES } from '../../const';
+import { Title } from '../../atoms/title';
+import { PopulationType, Prefecture, PopulationComposition } from '../../App';
 
 interface PopulationDataContainerProps {
   populationData: PopulationComposition[];
@@ -237,7 +237,6 @@ const ScrollableTableContainer = styled.div`
 `;
 
 const ScrollableTable = styled(BaseTable)`
-  min-width: 700px;
   white-space: nowrap;
 
   td {

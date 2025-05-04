@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Prefecture } from '../../../App';
-import { STYLES } from '../../../const';
-import { Title } from '../common/title';
+import { Prefecture } from '../../App';
+import { STYLES } from '../../const';
+import { Title } from '../../atoms/title';
 
 interface PrefectureListProps {
   prefectures: Prefecture[];

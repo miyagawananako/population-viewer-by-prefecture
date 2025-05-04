@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import PrefectureListComponent from './stories/components/PrefectureList';
-import PopulationDataContainer from './stories/components/PopulationDataContainer';
+import { PrefectureList } from './organism/PrefectureList';
+import { PopulationDataContainer } from './organism/PopulationDataContainer';
 import { BASE_URL, STORAGE_KEYS, STYLES } from './const';
 
 export interface Prefecture {
@@ -157,7 +157,7 @@ const App: React.FC = () => {
 
   return (
     <AppContainer>
-      <PrefectureListComponent
+      <PrefectureList
         prefectures={prefectures}
         selectedPrefs={selectedPrefs}
         onCheckboxChange={handleCheckboxChange}
