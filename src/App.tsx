@@ -88,7 +88,12 @@ const App: React.FC = () => {
               '生産年齢人口',
               '老年人口',
             ];
-            const data: PopulationComposition['data'] = {} as PopulationComposition['data'];
+            const data: PopulationComposition['data'] = {
+              総人口: [],
+              年少人口: [],
+              生産年齢人口: [],
+              老年人口: [],
+            };
 
             response.result.data.forEach((item, index) => {
               if (index < populationTypes.length) {

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { STYLES } from '../../const';
+import { theme } from '../../theme';
 
 export const Title = styled.h2`
-  font-size: ${STYLES.fontSize.large};
+  font-size: ${theme.fontSize.large};
   text-align: center;
   margin: 0;
 `;

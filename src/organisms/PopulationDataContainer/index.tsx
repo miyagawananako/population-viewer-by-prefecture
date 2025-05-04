@@ -54,7 +54,12 @@ export const PopulationDataContainer: React.FC<PopulationDataContainerProps> = (
       <PopulationTypeSelector>
         <PopulationTypeSelect
           value={selectedPopulationType}
-          onChange={(e) => setSelectedPopulationType(e.target.value as PopulationType)}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (POPULATION_TYPES.includes(value as PopulationType)) {
+              setSelectedPopulationType(value as PopulationType);
+            }
+          }}
         >
           {POPULATION_TYPES.map((type) => (
             <option key={type} value={type}>
