@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { POPULATION_TYPES, STYLES } from '../../const';
+import { Title } from '../common/title';
 import { PopulationType, Prefecture, PopulationComposition } from '../../App';
 
 interface PopulationDataContainerProps {
@@ -48,9 +49,7 @@ const PopulationDataContainer: React.FC<PopulationDataContainerProps> = ({
 
   return (
     <Container>
-      <Header>
-        <h2>人口構成データ</h2>
-      </Header>
+      <Title>人口構成データ</Title>
       <PopulationTypeSelector>
         <PopulationTypeSelect
           value={selectedPopulationType}
@@ -84,7 +83,7 @@ const PopulationDataContainer: React.FC<PopulationDataContainerProps> = ({
                 }
                 return value.toString();
               }}
-              width={30}
+              width={40}
             />
             <Tooltip contentStyle={{ fontSize: 12 }} />
             <Legend wrapperStyle={{ fontSize: 12 }} />
@@ -153,32 +152,22 @@ export default PopulationDataContainer;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${STYLES.spacing.medium};
-  padding: ${STYLES.spacing.large};
+  gap: ${STYLES.size.medium};
+  padding: ${STYLES.size.large};
   background-color: ${STYLES.colors.background};
   border-radius: ${STYLES.borderRadius.medium};
   width: 90%;
   max-width: 1200px;
 `;
 
-const Header = styled.div`
-  display: flex;
-  justify-content: center;
-
-  h2 {
-    font-size: ${STYLES.fontSize.large};
-    margin: 0;
-  }
-`;
-
 const PopulationTypeSelector = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: ${STYLES.spacing.medium};
+  margin-bottom: ${STYLES.size.medium};
 `;
 
 const PopulationTypeSelect = styled.select`
-  padding: ${STYLES.spacing.small} ${STYLES.spacing.medium};
+  padding: ${STYLES.size.small} ${STYLES.size.medium};
   border: 1px solid ${STYLES.colors.border};
   border-radius: ${STYLES.borderRadius.small};
   background-color: ${STYLES.colors.background};
@@ -189,9 +178,9 @@ const PopulationTypeSelect = styled.select`
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right ${STYLES.spacing.small} center;
-  background-size: 16px;
-  padding-right: ${STYLES.spacing.large};
+  background-position: right ${STYLES.size.small} center;
+  background-size: ${STYLES.size.medium};
+  padding-right: ${STYLES.size.large};
 
   &:focus {
     outline: none;
@@ -210,20 +199,23 @@ const ChartContainer = styled.div`
 
 const TableContainer = styled.div`
   width: 100%;
-  margin-top: ${STYLES.spacing.medium};
+  margin-top: ${STYLES.size.medium};
   display: flex;
-  background-color: ${STYLES.colors.white};
+  justify-content: center;
+  align-items: center;
 `;
 
 const BaseTable = styled.table`
   border-collapse: collapse;
   font-size: ${STYLES.fontSize.medium};
+  background-color: ${STYLES.colors.white};
 
   th,
   td {
     border: 1px solid ${STYLES.colors.border};
-    padding: ${STYLES.spacing.small};
+    padding: ${STYLES.size.small};
     text-align: center;
+    white-space: nowrap;
   }
 
   th {
@@ -241,7 +233,6 @@ const FixedTable = styled(BaseTable)`
 `;
 
 const ScrollableTableContainer = styled.div`
-  flex: 1;
   overflow-x: auto;
 `;
 

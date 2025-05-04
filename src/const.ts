@@ -25,7 +25,7 @@ export const STYLES = {
     buttonInactive: '#cccccc',
     buttonInactiveHover: '#b3b3b3',
   },
-  spacing: {
+  size: {
     small: '8px',
     medium: '16px',
     large: '24px',

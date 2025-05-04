@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Prefecture } from '../../App';
 import { STYLES } from '../../const';
+import { Title } from '../common/title';
 
 interface PrefectureListProps {
   prefectures: Prefecture[];
@@ -38,25 +39,19 @@ export default PrefectureList;
 
 const Wrapper = styled.div`
   display: flex;
-  row-gap: ${STYLES.spacing.small};
+  row-gap: ${STYLES.size.small};
   flex-direction: column;
-  padding: ${STYLES.spacing.large};
+  padding: ${STYLES.size.large};
   align-items: center;
   width: 100%;
-`;
-
-const Title = styled.h2`
-  font-size: ${STYLES.fontSize.large};
-  text-align: center;
-  margin: 0;
 `;
 
 const List = styled.div`
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  gap: ${STYLES.spacing.medium};
+  gap: ${STYLES.size.medium};
   max-width: 1600px;
-  padding: ${STYLES.spacing.medium};
+  padding: ${STYLES.size.medium};
   @media (max-width: 1600px) {
     grid-template-columns: repeat(8, 1fr);
   }
@@ -77,18 +72,17 @@ const List = styled.div`
 const PrefectureItem = styled.div`
   display: flex;
   align-items: center;
-  gap: ${STYLES.spacing.small};
+  gap: ${STYLES.size.small};
 `;
 
 const Checkbox = styled.input`
-  width: 16px;
-  height: 16px;
+  width: ${STYLES.size.medium};
+  height: ${STYLES.size.medium};
   cursor: pointer;
 `;
 
 const Label = styled.label`
-  cursor: pointer;
-  flex: 1;
   text-align: left;
   font-size: ${STYLES.fontSize.medium};
+  white-space: nowrap;
 `;
