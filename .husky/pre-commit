@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm run pre-commit
+npm run format
+if [ -d "src/__tests__" ] || [ -n "$(find src -name "*.test.*" -o -name "*.spec.*" -o -name "*.test.tsx" -o -name "*.spec.tsx")" ]; then
+  CI=true npm test
+fi 
