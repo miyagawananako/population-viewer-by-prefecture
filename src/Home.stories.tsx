@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { Home } from './Home';
 import { useState, useEffect } from 'react';
-import { PopulationComposition } from './App';
+import { PopulationComposition } from './type';
 
 const meta: Meta<typeof Home> = {
   component: Home,

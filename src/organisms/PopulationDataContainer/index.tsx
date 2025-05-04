@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 import { POPULATION_TYPES, STYLES } from '../../const';
 import { Title } from '../../atoms/title';
-import { PopulationType, Prefecture, PopulationComposition } from '../../App';
+import { PopulationType, Prefecture, PopulationComposition } from '../../type';
 
 interface PopulationDataContainerProps {
   populationData: PopulationComposition[];

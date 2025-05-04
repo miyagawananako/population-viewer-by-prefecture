@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { PrefectureList } from './organisms/PrefectureList';
 import { PopulationDataContainer } from './organisms/PopulationDataContainer';
-import { Prefecture, PopulationComposition } from './App';
+import { Prefecture, PopulationComposition } from './type';
 import { STYLES } from './const';
 
 interface HomeProps {

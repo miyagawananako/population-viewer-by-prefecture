@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Prefecture } from '../../App';
+import { Prefecture } from '../../type';
 import { STYLES } from '../../const';
 import { Title } from '../../atoms/title';
 
