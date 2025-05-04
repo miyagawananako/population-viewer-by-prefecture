@@ -177,3 +177,27 @@ test('人口構成データの取得に失敗した場合、エラーメッセ�
     expect(errorMessage).toBeInTheDocument();
   });
 });
+
+test('人口データの種類を切り替えることができる', async () => {
+  render(<App />);
+
+  await waitFor(() => {
+    const checkbox = screen.getByLabelText(mockPrefectures[0].prefName);
+    expect(checkbox).toBeInTheDocument();
+  });
+
+  const checkbox = screen.getByLabelText(mockPrefectures[0].prefName);
+  fireEvent.click(checkbox);
+
+  await waitFor(() => {
+    const select = screen.getByRole('combobox');
+    expect(select).toBeInTheDocument();
+  });
+
+  const select = screen.getByRole('combobox');
+
+  POPULATION_TYPES.forEach(async (type) => {
+    fireEvent.change(select, { target: { value: type } });
+    expect(select).toHaveValue(type);
+  });
+});
