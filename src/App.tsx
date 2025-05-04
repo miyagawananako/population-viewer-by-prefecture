@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { PrefectureList } from './organism/PrefectureList';
-import { PopulationDataContainer } from './organism/PopulationDataContainer';
-import { BASE_URL, STORAGE_KEYS, STYLES } from './const';
+import { Home } from './Home';
+import { BASE_URL, STORAGE_KEYS } from './const';
 
 export interface Prefecture {
   prefCode: number;
@@ -151,36 +149,15 @@ const App: React.FC = () => {
     );
   };
 
-  if (error) {
-    return <ErrorMessage>{error}</ErrorMessage>;
-  }
-
   return (
-    <AppContainer>
-      <PrefectureList
-        prefectures={prefectures}
-        selectedPrefs={selectedPrefs}
-        onCheckboxChange={handleCheckboxChange}
-      />
-      {populationData.length > 0 && (
-        <PopulationDataContainer populationData={populationData} prefectures={prefectures} />
-      )}
-    </AppContainer>
+    <Home
+      prefectures={prefectures}
+      selectedPrefs={selectedPrefs}
+      populationData={populationData}
+      onCheckboxChange={handleCheckboxChange}
+      error={error}
+    />
   );
 };
 
 export default App;
-
-const AppContainer = styled.div`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-`;
-
-const ErrorMessage = styled.div`
-  color: ${STYLES.colors.error};
-  font-size: ${STYLES.fontSize.medium};
-`;
